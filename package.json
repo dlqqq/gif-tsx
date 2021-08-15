@@ -1,0 +1,46 @@
+{
+  "name": "gif-tsx",
+  "version": "0.1.0",
+  "description": "A TypeScript-first React GIF player library.",
+  "keywords": [
+    "gif",
+    "react",
+    "reactjs",
+    "typescript"
+  ],
+  "author": "David L. Qiu <david@qiu.dev>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "clean": "rimraf ./build/ ./dist/",
+    "build": "yarn clean && tsc && rollup -c",
+    "build-watch": "nodemon --watch src --ext ts,tsx --exec \"yarn build\"",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint --ext ts,tsx ./ && prettier --check ./",
+    "fix-lint": "eslint --ext ts,tsx --fix ./ && prettier --write ./"
+  },
+  "dependencies": {
+    "omggif": "^1.0.10",
+    "react": "^17.0.0"
+  },
+  "devDependencies": {
+    "@types/omggif": "^1.0.2",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2",
+    "rollup": "^2.56.2",
+    "rollup-plugin-dts": "^3.0.2",
+    "typescript": "^4.3.2"
+  }
+}
