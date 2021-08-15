@@ -135,8 +135,6 @@ export function useGifController(
     }
   }, [canvas, shouldUpdate]);
 
-  console.log(canvas.current);
-
   // if canvasAccessible is set to true, render first frame and then autoplay if
   // specified in hook arguments
   useEffect(() => {
