@@ -16,22 +16,19 @@ type HTMLCanvasElementProps = DetailedHTMLProps<
 >;
 
 type GifControllerLoading = {
+  state: "loading";
   canvasProps: HTMLCanvasElementProps;
-  loading: true;
-  error: false;
 };
 
 type GifControllerError = {
+  state: "error";
   canvasProps: HTMLCanvasElementProps;
-  loading: false;
-  error: true;
   errorMessage: string;
 };
 
 type GifControllerResolved = {
+  state: "resolved";
   canvasProps: HTMLCanvasElementProps;
-  loading: false;
-  error: false;
   frameIndex: MutableRefObject<number>;
   playing: boolean;
   play: () => void;
@@ -135,8 +132,6 @@ export function useGifController(
     }
   }, [canvas, shouldUpdate]);
 
-  console.log(canvas.current);
-
   // if canvasAccessible is set to true, render first frame and then autoplay if
   // specified in hook arguments
   useEffect(() => {
@@ -160,22 +155,23 @@ export function useGifController(
   }, [playing]);
 
   if (state.loading === true || !canvas)
-    return { canvasProps: { hidden: true }, loading: true, error: false };
+    return {
+      state: "loading",
+      canvasProps: { hidden: true },
+    };
 
   if (state.error === true)
     return {
+      state: "error",
       canvasProps: { hidden: true },
-      loading: false,
-      error: true,
       errorMessage: state.errorMessage,
     };
 
   const { width, height } = state.gifReader;
 
   return {
+    state: "resolved",
     canvasProps: { width, height },
-    loading: false,
-    error: false,
     playing,
     play,
     pause,
