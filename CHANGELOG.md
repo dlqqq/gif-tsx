@@ -6,6 +6,8 @@
 
 - Nuked console log in `useGifController`
 
+- Fixed linter errors
+
 ## 0.1.1
 
 - Added `bugs` property to `package.json` manifest
