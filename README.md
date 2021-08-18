@@ -18,7 +18,7 @@ Install with your choice of package manager.
 ### NPM
 
 ```
-npm install gif-tsx --save
+npm install gif-tsx
 ```
 
 ### Yarn
@@ -79,7 +79,7 @@ function GifPlayer() {
     <div>
       <canvas {...canvasProps} ref={canvasRef} />
       <button alt="play" onClick={play} />
-      <button alt="pause" onClick={pause}>
+      <button alt="pause" onClick={pause} />
     </div>
   );
 }
