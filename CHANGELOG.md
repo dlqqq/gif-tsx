@@ -1,6 +1,14 @@
 # Changelog
 
+## 0.1.4
+
+- Fix `README.md` example (#2)
+
+- Include `prepublishOnly` script to ensure package is always built before publish.
+
 ## 0.1.3
+
+BROKEN: forgot to run `yarn build` before publish. whoops...
 
 - Include `repository` field in `package.json` manifest
 
