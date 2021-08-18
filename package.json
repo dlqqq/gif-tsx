@@ -9,6 +9,10 @@
     "typescript"
   ],
   "author": "David L. Qiu <david@qiu.dev>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diracs-delta/gif-tsx"
+  },
   "bugs": {
     "email": "david@qiu.dev",
     "url": "https://github.com/diracs-delta/gif-tsx"
