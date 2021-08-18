@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- Include `repository` field in `package.json` manifest
+
 ## 0.1.2
 
 All done over the course of a soul-draining 6-hour-long flight with no internet.
