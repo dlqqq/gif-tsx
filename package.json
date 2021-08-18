@@ -1,6 +1,6 @@
 {
   "name": "gif-tsx",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A TypeScript-first React GIF player library.",
   "keywords": [
     "gif",

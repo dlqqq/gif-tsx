@@ -1,10 +1,14 @@
 # Changelog
 
-## 0.1.4
+## 0.1.5
 
 - Fix `README.md` example (#2)
 
 - Include `prepublishOnly` script to ensure package is always built before publish.
+
+## 0.1.4
+
+Bunk. The `--dry-run` flag wasn't working for whatever reason.
 
 ## 0.1.3
 
