@@ -49,9 +49,6 @@ export function extractFrames(gifReader: GifReader): Frame[] | null {
       delay,
     } = gifReader.frameInfo(0);
 
-    // skip this frame if disposal >= 2; from GIF spec
-    if (disposal >= 2) continue;
-
     // create hidden temporary canvas that exists only to render the "diff"
     // between the previous frame and the current frame
     const tempCanvas = document.createElement("canvas");
@@ -73,11 +70,17 @@ export function extractFrames(gifReader: GifReader): Frame[] | null {
       dirtyHeight
     );
 
-    // draw the tempCanvas on top. ctx.putImageData(tempCtx.getImageData(...))
-    // is too primitive here, since the pixels would be *replaced* by incoming
-    // RGBA values instead of layered.
-    ctx.drawImage(tempCanvas, 0, 0);
-
+    // Leave the current graphic in place and draw next frame on top of it.
+    if (disposal === 0 || disposal === 1) {
+      // draw the tempCanvas on top. ctx.putImageData(tempCtx.getImageData(...))
+      // is too primitive here, since the pixels would be *replaced* by incoming
+      // RGBA values instead of layered.
+      ctx.drawImage(tempCanvas, 0, 0);
+    } else if (disposal === 2) {
+      // Restore to background color.
+      ctx.putImageData(tempCtx.getImageData(0, 0, dirtyWidth, dirtyHeight), 0, 0);
+    }
+    // Disposal 3: don't draw anything new on top.
     frames.push({
       delay: delay * 10,
       imageData: ctx.getImageData(0, 0, width, height),
