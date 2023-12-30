@@ -35,7 +35,7 @@ export function extractFrames(gifReader: GifReader): Frame[] | null {
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
   if (!ctx) return null;
 
   for (let frameIndex = 0; frameIndex < gifReader.numFrames(); frameIndex++) {
@@ -54,7 +54,7 @@ export function extractFrames(gifReader: GifReader): Frame[] | null {
     const tempCanvas = document.createElement("canvas");
     tempCanvas.width = width;
     tempCanvas.height = height;
-    const tempCtx = tempCanvas.getContext("2d");
+    const tempCtx = tempCanvas.getContext("2d", { willReadFrequently: true });
     if (!tempCtx) return null;
 
     // extract GIF frame data to tempCanvas
