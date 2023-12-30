@@ -35,7 +35,7 @@ export function extractFrames(gifReader: GifReader): Frame[] | null {
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
-  const ctx = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
   if (!ctx) return null;
 
   for (let frameIndex = 0; frameIndex < gifReader.numFrames(); frameIndex++) {
@@ -49,15 +49,12 @@ export function extractFrames(gifReader: GifReader): Frame[] | null {
       delay,
     } = gifReader.frameInfo(0);
 
-    // skip this frame if disposal >= 2; from GIF spec
-    if (disposal >= 2) continue;
-
     // create hidden temporary canvas that exists only to render the "diff"
     // between the previous frame and the current frame
     const tempCanvas = document.createElement("canvas");
     tempCanvas.width = width;
     tempCanvas.height = height;
-    const tempCtx = tempCanvas.getContext("2d");
+    const tempCtx = tempCanvas.getContext("2d", { willReadFrequently: true });
     if (!tempCtx) return null;
 
     // extract GIF frame data to tempCanvas
@@ -73,10 +70,19 @@ export function extractFrames(gifReader: GifReader): Frame[] | null {
       dirtyHeight
     );
 
-    // draw the tempCanvas on top. ctx.putImageData(tempCtx.getImageData(...))
-    // is too primitive here, since the pixels would be *replaced* by incoming
-    // RGBA values instead of layered.
-    ctx.drawImage(tempCanvas, 0, 0);
+    // Disposal Method 1: Leave the current graphic in place and draw next frame
+    // on top of it.
+    if (disposal === 0 || disposal === 1) {
+      // draw the tempCanvas on top. ctx.putImageData(tempCtx.getImageData(...))
+      // is too primitive here, since the pixels would be *replaced* by incoming
+      // RGBA values instead of layered.
+      ctx.drawImage(tempCanvas, 0, 0);
+    } else if (disposal === 2) {
+      // Disposal Method 2: Restore to background color.
+      ctx.putImageData(tempCtx.getImageData(0, 0, dirtyWidth, dirtyHeight), 0, 0);
+    } else if (disposal === 3) {
+      // Disposal Method 3: don't draw anything new on top.
+    }
 
     frames.push({
       delay: delay * 10,
