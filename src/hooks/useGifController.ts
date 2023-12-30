@@ -80,7 +80,7 @@ export function useGifController(
 
   type State = LoadingState | ResolvedState | ErrorState;
 
-  const ctx = canvas.current?.getContext("2d");
+  const ctx = canvas.current?.getContext("2d", { willReadFrequently: true });
 
   // asynchronous state variables strongly typed as a union such that properties
   // are only defined when `loading === true`.
